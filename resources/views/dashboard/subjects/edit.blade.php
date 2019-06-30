@@ -82,8 +82,8 @@
                                                 style="width: 100%;">
                                             @if($teachers)
                                                 @foreach($teachers as $key => $teacher)
-                                                    <option value="{{$key}}" >
-                                                        {{$teacher->subjects }}
+                                                    <option value="{{$key}}" @foreach($subject->teachers as $teacherKey => $teacherValue) {{$key == $teacherKey ? 'selected' : ''}} @endforeach>
+                                                        {{$teacher->name }}
                                                     </option>
                                                 @endforeach
                                             @endif

@@ -1,0 +1,551 @@
+-- phpMyAdmin SQL Dump
+-- version 4.8.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jul 01, 2019 at 12:11 AM
+-- Server version: 10.1.36-MariaDB
+-- PHP Version: 7.2.11
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `school`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `classes`
+--
+
+CREATE TABLE `classes` (
+  `id` int(10) NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `grade_id` int(10) NOT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `classes`
+--
+
+INSERT INTO `classes` (`id`, `name`, `grade_id`, `created_by`, `created_at`, `updated_at`) VALUES
+(1, '1/1', 1, 2, '2019-06-29 17:49:47', '2019-06-29 18:02:41'),
+(2, '1/2', 1, 2, '2019-06-29 17:50:46', '2019-06-29 17:50:46'),
+(3, '1/3', 1, 2, '2019-06-29 17:51:21', '2019-06-29 17:51:21');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `grades`
+--
+
+CREATE TABLE `grades` (
+  `id` int(10) NOT NULL,
+  `level_id` int(10) DEFAULT NULL,
+  `created_by` int(10) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `grades`
+--
+
+INSERT INTO `grades` (`id`, `level_id`, `created_by`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, '2019-06-16 22:00:00', '2019-06-18 22:00:00'),
+(10, 1, 2, '2019-06-29 20:44:49', '2019-06-29 20:44:49'),
+(11, 1, 2, '2019-06-29 22:06:54', '2019-06-29 22:06:54'),
+(12, 1, 2, '2019-06-29 22:08:16', '2019-06-29 22:08:16'),
+(13, 1, 2, '2019-06-29 22:08:36', '2019-06-29 22:08:36'),
+(14, 1, 2, '2019-06-29 22:09:18', '2019-06-29 22:09:18'),
+(15, 3, 2, '2019-06-29 22:09:40', '2019-06-29 22:09:40');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `images`
+--
+
+CREATE TABLE `images` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `path` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `album_id` int(10) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `levels`
+--
+
+CREATE TABLE `levels` (
+  `id` int(10) NOT NULL,
+  `created_by` int(10) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `levels`
+--
+
+INSERT INTO `levels` (`id`, `created_by`, `created_at`, `updated_at`) VALUES
+(1, 2, '2019-06-10 22:00:00', '2019-06-18 22:00:00'),
+(3, 2, '2019-06-29 22:05:48', '2019-06-29 22:05:48'),
+(4, 2, '2019-06-29 22:06:13', '2019-06-29 22:06:13');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `role` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `role`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', NULL, NULL),
+(2, 'teacher', NULL, NULL),
+(3, 'student', NULL, NULL),
+(4, 'Support', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `setting`
+--
+
+CREATE TABLE `setting` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `website_title_en` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `website_title_ar` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `website_desc_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `website_desc_ar` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `default_lang` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ar',
+  `open` int(11) NOT NULL,
+  `thumb` int(10) UNSIGNED DEFAULT NULL,
+  `logo` int(10) UNSIGNED DEFAULT NULL,
+  `favicon` int(10) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `students`
+--
+
+CREATE TABLE `students` (
+  `id` int(10) NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `class_id` int(10) NOT NULL,
+  `grade_id` int(10) DEFAULT NULL,
+  `level_id` int(10) DEFAULT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`id`, `name`, `email`, `phone`, `address`, `class_id`, `grade_id`, `level_id`, `created_by`, `created_at`, `updated_at`) VALUES
+(1, 'Mohamed Mahmoud', 'kidwany@gmail.com', '01100960900', 'Cairo', 1, 1, 3, 2, '2019-06-30 08:02:37', '2019-06-30 08:02:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subjects`
+--
+
+CREATE TABLE `subjects` (
+  `id` int(10) NOT NULL,
+  `created_by` int(10) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `subjects`
+--
+
+INSERT INTO `subjects` (`id`, `created_by`, `created_at`, `updated_at`) VALUES
+(1, 2, '2019-06-11 22:00:00', '2019-06-18 22:00:00'),
+(6, 2, '2019-06-30 17:42:58', '2019-06-30 17:42:58'),
+(7, 2, '2019-06-30 17:44:47', '2019-06-30 17:44:47'),
+(8, 2, '2019-06-30 17:59:00', '2019-06-30 17:59:00'),
+(9, 2, '2019-06-30 18:01:04', '2019-06-30 18:01:04'),
+(14, 2, '2019-06-30 18:13:43', '2019-06-30 18:13:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subjects_grades`
+--
+
+CREATE TABLE `subjects_grades` (
+  `id` int(10) NOT NULL,
+  `subject_id` int(10) NOT NULL,
+  `grade_id` int(10) NOT NULL,
+  `created_by` int(10) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `subjects_grades`
+--
+
+INSERT INTO `subjects_grades` (`id`, `subject_id`, `grade_id`, `created_by`, `created_at`, `updated_at`) VALUES
+(11, 14, 14, NULL, NULL, NULL),
+(12, 14, 15, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subjects_teachers`
+--
+
+CREATE TABLE `subjects_teachers` (
+  `id` int(10) NOT NULL,
+  `subject_id` int(10) DEFAULT NULL,
+  `teacher_id` int(10) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `subjects_teachers`
+--
+
+INSERT INTO `subjects_teachers` (`id`, `subject_id`, `teacher_id`, `created_at`, `updated_at`) VALUES
+(2, 14, 1, '0000-00-00 00:00:00', '2019-06-30 20:13:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `teachers`
+--
+
+CREATE TABLE `teachers` (
+  `id` int(10) NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `address` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `teachers`
+--
+
+INSERT INTO `teachers` (`id`, `name`, `email`, `phone`, `address`, `created_by`, `created_at`, `updated_at`) VALUES
+(1, 'Mahmoud Osama Sayed', 'osama@gmail.com', '0255984566', 'Assuit', 2, '2019-06-18 22:00:00', '2019-06-10 22:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role_id` int(10) UNSIGNED DEFAULT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `role_id`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(2, 'Ahmed Kidwany', 'ahmed@gmail.com', 1, NULL, '$2y$10$nKEdHs80k0y8iezFBtWVOODsFXlvxX4Y2ezYDY2f1HQ8hpFPTrdbO', 'Vfb0U8Xo9NFA5wdl50HdcDZmxLij6PwRNSWDURapIS77jIqtgW0aFOc348Of', '2019-06-18 15:45:49', '2019-06-18 16:12:57');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `classes`
+--
+ALTER TABLE `classes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `class_created_by` (`created_by`),
+  ADD KEY `class_grade_id` (`grade_id`);
+
+--
+-- Indexes for table `grades`
+--
+ALTER TABLE `grades`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `grade_created_by` (`created_by`),
+  ADD KEY `grade_level_id` (`level_id`);
+
+--
+-- Indexes for table `images`
+--
+ALTER TABLE `images`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `image_album_id` (`album_id`);
+
+--
+-- Indexes for table `levels`
+--
+ALTER TABLE `levels`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `level_created_by` (`created_by`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `setting`
+--
+ALTER TABLE `setting`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `logo_image_id` (`logo`),
+  ADD KEY `thumb_image_id` (`thumb`),
+  ADD KEY `favicon_image_id` (`favicon`);
+
+--
+-- Indexes for table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_created_by` (`created_by`),
+  ADD KEY `student_class_id` (`class_id`),
+  ADD KEY `student_grade_id` (`grade_id`),
+  ADD KEY `student_level_id` (`level_id`);
+
+--
+-- Indexes for table `subjects`
+--
+ALTER TABLE `subjects`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `subject_created_by` (`created_by`);
+
+--
+-- Indexes for table `subjects_grades`
+--
+ALTER TABLE `subjects_grades`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `subject_id_subjects` (`subject_id`),
+  ADD KEY `grade_id_grades` (`grade_id`);
+
+--
+-- Indexes for table `subjects_teachers`
+--
+ALTER TABLE `subjects_teachers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `subject_subject_id` (`subject_id`),
+  ADD KEY `teacher_teache_id` (`teacher_id`);
+
+--
+-- Indexes for table `teachers`
+--
+ALTER TABLE `teachers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `teacher_created_by_user` (`created_by`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`),
+  ADD KEY `user_role_id` (`role_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `classes`
+--
+ALTER TABLE `classes`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `grades`
+--
+ALTER TABLE `grades`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `images`
+--
+ALTER TABLE `images`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+
+--
+-- AUTO_INCREMENT for table `levels`
+--
+ALTER TABLE `levels`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `setting`
+--
+ALTER TABLE `setting`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `subjects`
+--
+ALTER TABLE `subjects`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `subjects_grades`
+--
+ALTER TABLE `subjects_grades`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `subjects_teachers`
+--
+ALTER TABLE `subjects_teachers`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `teachers`
+--
+ALTER TABLE `teachers`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `classes`
+--
+ALTER TABLE `classes`
+  ADD CONSTRAINT `class_created_by` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `class_grade_id` FOREIGN KEY (`grade_id`) REFERENCES `grades` (`id`);
+
+--
+-- Constraints for table `grades`
+--
+ALTER TABLE `grades`
+  ADD CONSTRAINT `grade_created_by` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `grade_level_id` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`);
+
+--
+-- Constraints for table `levels`
+--
+ALTER TABLE `levels`
+  ADD CONSTRAINT `level_created_by` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `setting`
+--
+ALTER TABLE `setting`
+  ADD CONSTRAINT `favicon_image_id` FOREIGN KEY (`favicon`) REFERENCES `images` (`id`),
+  ADD CONSTRAINT `logo_image_id` FOREIGN KEY (`logo`) REFERENCES `images` (`id`),
+  ADD CONSTRAINT `thumb_image_id` FOREIGN KEY (`thumb`) REFERENCES `images` (`id`);
+
+--
+-- Constraints for table `students`
+--
+ALTER TABLE `students`
+  ADD CONSTRAINT `student_class_id` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`),
+  ADD CONSTRAINT `student_created_by` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `student_grade_id` FOREIGN KEY (`grade_id`) REFERENCES `grades` (`id`),
+  ADD CONSTRAINT `student_level_id` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`);
+
+--
+-- Constraints for table `subjects`
+--
+ALTER TABLE `subjects`
+  ADD CONSTRAINT `subject_created_by` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `subjects_grades`
+--
+ALTER TABLE `subjects_grades`
+  ADD CONSTRAINT `grade_id_grades` FOREIGN KEY (`grade_id`) REFERENCES `grades` (`id`),
+  ADD CONSTRAINT `subject_id_subjects` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`);
+
+--
+-- Constraints for table `subjects_teachers`
+--
+ALTER TABLE `subjects_teachers`
+  ADD CONSTRAINT `subject_subject_id` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`),
+  ADD CONSTRAINT `teacher_teache_id` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`id`);
+
+--
+-- Constraints for table `teachers`
+--
+ALTER TABLE `teachers`
+  ADD CONSTRAINT `teacher_created_by_user` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `user_role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
