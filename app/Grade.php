@@ -64,7 +64,12 @@ class Grade extends Model
 
     public function subjects()
     {
-        return $this->belongsToMany(Grade::class, 'subjects_grades','grade_id ', 'subject_id');
+        return $this->belongsToMany(Subject::class, 'subjects_grades','grade_id ', 'subject_id');
+    }
+
+    public function teachers()
+    {
+        return $this->belongsToMany(Teacher::class, 'grades_teachers')->withTimestamps();
     }
 
 }

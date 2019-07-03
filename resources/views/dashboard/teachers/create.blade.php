@@ -2,6 +2,12 @@
 @section('title', 'Dashboard')
 {{--Drop Your Customized Style Codes Here--}}
 @section('customizedStyle')
+    <style>
+        .select2-container--default .select2-selection--multiple .select2-selection__choice
+        {
+            background-color: #3c8dbc !important;
+        }
+    </style>
 @endsection
 {{--Drop Your Customized Scripts Codes Here--}}
 @section('customizedScript')
@@ -43,24 +49,59 @@
                         <input type="hidden" name="created_by">
                         <div class="box-body">
                             <div class="form-group">
+
+
                                 <div class="col-lg-6">
                                     <label for="exampleInputEmail1">Teacher Name</label>
-                                    <input type="text" class="form-control" name="name" id="exampleInputEmail1" placeholder="Enter Teacher Name">
+                                    <input type="text" class="form-control" name="name" id="exampleInputEmail1" placeholder="Enter Teacher Name" value="{{old('name')}}">
                                 </div>
+
 
                                 <div class="col-lg-6">
                                     <label for="exampleInputEmail1"> Email</label>
-                                    <input type="email" class="form-control" name="email" id="exampleInputEmail1" placeholder="Enter Teacher Email">
+                                    <input type="email" class="form-control" name="email" id="exampleInputEmail1" placeholder="Enter Teacher Email" value="{{old('email')}}">
                                 </div>
+
 
                                 <div class="col-lg-6">
                                     <label for="exampleInputEmail1"> Phone</label>
-                                    <input type="number" class="form-control" name="phone" id="exampleInputEmail1" placeholder="Enter Teacher Phone">
+                                    <input type="number" class="form-control" name="phone" id="exampleInputEmail1" placeholder="Enter Teacher Phone" value="{{old('phone')}}">
                                 </div>
+
 
                                 <div class="col-lg-6">
                                     <label for="exampleInputEmail1">Address</label>
-                                    <input type="text" class="form-control" name="address" id="exampleInputEmail1" placeholder="Enter Teacher Address">
+                                    <input type="text" class="form-control" name="address" id="exampleInputEmail1" placeholder="Enter Teacher Address" value="{{old('address')}}">
+                                </div>
+
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Subjects Taught By Teacher</label>
+                                        <select name="subjects[]" class="form-control select2" multiple="multiple" data-placeholder="Select a Subjects Taught by Teacher"
+                                                style="width: 100%;">
+                                            @if($subjects)
+                                                @foreach($subjects as $subject)
+                                                    <option value="{{$subject->id}}">{{$subject->{'subject_'.currentLang()}->name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Grades Taught By Teacher</label>
+                                        <select name="grades[]" class="form-control select2" multiple="multiple" data-placeholder="Select a Grades Taught by Teacher"
+                                                style="width: 100%;">
+                                            @if($grades)
+                                                @foreach($grades as $grade)
+                                                    <option value="{{$grade->id}}">{{$grade->{'grade_'.currentLang()}->grade_name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
                                 </div>
 
                             </div>

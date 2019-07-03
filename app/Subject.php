@@ -59,7 +59,7 @@ class Subject extends Model
 
     public function grades()
     {
-        return $this->belongsToMany(Grade::class, 'subjects_grades','subject_id', 'grade_id');
+        return $this->belongsToMany(Grade::class, 'subjects_grades')->withPivot('created_by')->withTimestamps();
     }
 
     public function teachers()

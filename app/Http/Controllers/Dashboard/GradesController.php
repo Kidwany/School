@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Grade;
 use App\Level;
+use App\Subject;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
 class GradesController extends Controller
@@ -18,8 +21,20 @@ class GradesController extends Controller
      */
     public function index()
     {
-        $grades = Grade::with('grade_en', 'grade_ar','createdBy', 'level')->get();
-        return view('dashboard.grades.index', compact('grades'));
+        $subject_id = Input::get('subjectID');
+
+        if($subject_id)
+        {
+            $subject = Subject::find($subject_id);
+            $grades = $subject->grades()->where('subject_id', $subject_id)->get();
+            return view('dashboard.grades.index', compact('grades', 'subject'));
+        }
+        else
+        {
+            $grades = Grade::with('grade_en', 'grade_ar','createdBy', 'level')->get();
+            return view('dashboard.grades.index', compact('grades'));
+        }
+
     }
 
     /**
@@ -32,10 +47,6 @@ class GradesController extends Controller
         $levels = Level::with('level_en', 'level_ar')->get();
         return view('dashboard.grades.create', compact('levels'));
     }
-
-
-
-
 
 
 

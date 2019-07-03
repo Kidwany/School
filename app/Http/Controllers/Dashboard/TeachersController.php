@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Grade;
+use App\Subject;
+use App\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class TeachersController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -14,8 +20,10 @@ class TeachersController extends Controller
      */
     public function index()
     {
-        return view('dashboard.teachers.index');
+        $teachers = Teacher::with('createdBy', 'subjects')->get();
+        return view('dashboard.teachers.index', compact('teachers'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -24,18 +32,54 @@ class TeachersController extends Controller
      */
     public function create()
     {
-        return view('dashboard.teachers.create');
+        $subjects = Subject::with('subject_en', 'subject_ar')->get();
+        $grades = Grade::with('grade_en', 'grade_ar')->get();
+        return view('dashboard.teachers.create', compact('subjects', 'grades'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
+
+
+
+
     public function store(Request $request)
     {
-        //
+
+        $input = $request->all();
+        $teacherSubjects = $request->subjects;
+        $teachersGrades = $request->grades;
+        $input['created_by'] = Auth::id();
+
+        $this->validate($request,[
+            'name'        =>    'required|max:200',
+            'email'       =>    'required|email|unique:teachers|max:200',
+            'phone'       =>    'required|max:200',
+            'address'     =>    'required|max:200',
+            'subjects.*'  =>    'required',
+            'grades.*'    =>    'required',
+        ],[],[
+            'name'        =>    ' Name',
+            'email'       =>    ' Email',
+            'phone'       =>    ' Phone',
+            'address'     =>    ' Address',
+        ]);
+
+        //Save Teacher to subjects table
+        $teacher = new Teacher();
+        $teacher->created_by = $input['created_by'];
+        $teacher->name = $input['name'];
+        $teacher->email = $input['email'];
+        $teacher->phone = $input['phone'];
+        $teacher->address = $input['address'];
+        $teacher->save();
+
+        //Save Subject ID and related Teacher ID to subject_teachers table
+        $teacher->subjects()->attach($teacherSubjects);
+        //Save Subject ID and related Grade ID to subject_teachers table
+        $teacher->grades()->attach($teachersGrades);
+
+        Session::flash('create', 'Teacher  Has Been Created Successfully');
+        return redirect('admin/teachers');
     }
 
     /**
@@ -57,19 +101,56 @@ class TeachersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $teacher = Teacher::with('grades', 'subjects')->findOrFail($id);
+        $subjects = Subject::with('subject_en', 'subject_ar')->get();
+        $grades = Grade::with('grade_en', 'grade_ar')->get();
+        return view('dashboard.teachers.edit', compact('subjects', 'grades', 'teacher'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+
+
+
+
     public function update(Request $request, $id)
     {
-        //
+        $teacher = Teacher::find($id);
+        $input = $request->all();
+        $teacherSubjects = $request->subjects;
+        $teachersGrades = $request->grades;
+        $input['created_by'] = Auth::id();
+
+        $this->validate($request,[
+            'name'        =>    'required|max:200',
+            'email'       =>    'required|email|unique:teachers,id,'. $id .'|max:200',
+            'phone'       =>    'required|max:200',
+            'address'     =>    'required|max:200',
+            'subjects.*'  =>    'required',
+            'grades.*'    =>    'required',
+        ],[],[
+            'name'        =>    ' Name',
+            'email'       =>    ' Email',
+            'phone'       =>    ' Phone',
+            'address'     =>    ' Address',
+        ]);
+
+        //Save Teacher to teachers table
+        $teacher->created_by = $input['created_by'];
+        $teacher->name = $input['name'];
+        $teacher->email = $input['email'];
+        $teacher->phone = $input['phone'];
+        $teacher->address = $input['address'];
+        $teacher->save();
+
+
+        //Save Subject ID and related Teacher ID to subject_teachers table
+        $teacher->subjects()->sync($teacherSubjects);
+        //Save Subject ID and related Grade ID to subject_teachers table
+        $teacher->grades()->sync($teachersGrades);
+
+
+        Session::flash('update', 'Teacher  Has Been Updated Successfully');
+        return redirect('admin/teachers');
     }
 
     /**

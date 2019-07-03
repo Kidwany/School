@@ -81,7 +81,7 @@
                                     <td>{{$subject->id}}</td>
                                     <td>{{$subject->{'subject_'.currentLang()}->name}}</td>
                                     <td>
-                                        <a href="{{url('admin/subject-grades/'.$subject->id)}}">Show Grades</a>
+                                        <a href="{{url('admin/grades?subjectID='.$subject->id)}}">Show Grades</a>
                                     </td>
                                     <td>
                                         <a href="{{url('admin/subject-teachers/'.$subject->id)}}">Show Teachers</a>

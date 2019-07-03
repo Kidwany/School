@@ -39,7 +39,6 @@ class SubjectsController extends Controller
 
 
 
-
     public function store(Request $request)
     {
         $input = $request->all();
@@ -55,50 +54,25 @@ class SubjectsController extends Controller
             'name_ar'         => ' Name in Arabic',
         ]);
 
-
         //Save Subject to subjects table
         $subject = new Subject();
         $subject->created_by = $input['created_by'];
         $subject->save();
-
 
         //Save Subject and related grade to subject_grades table
         $subject->subject_en()->create(['subject_id' => $subject->id, 'name' =>  $request->name_en ]);
         $subject->subject_ar()->create(['subject_id' => $subject->id, 'name' =>  $request->name_ar ]);
 
         //Save Subject ID and related grade ID to subject_grades table
-        foreach ($subjectGrades as $grade)
-        {
-            if ($grade != null)
-            {
-                DB::table('subjects_grades')->insert(['grade_id' => $grade, 'subject_id' => $subject->id, 'created_at' => null, 'updated_at' => null]);
-            }
-        }
-
+        $subject->grades()->attach($subjectGrades);
         //Save Subject ID and related Teacher ID to subject_teachers table
-        foreach ($subjectTeachers as $teacher)
-        {
-            if ($teacher != null)
-            {
-                DB::table('subjects_teachers')->insert(['teacher_id' => $teacher, 'subject_id' => $subject->id, 'created_at' => null, 'updated_at' => null]);
-            }
-        }
+        $subject->teachers()->attach($subjectTeachers);
 
         Session::flash('create', 'Subject  Has Been Created Successfully');
-
         return redirect('admin/subjects');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -119,6 +93,7 @@ class SubjectsController extends Controller
 
     public function update(Request $request, $id)
     {
+        $subject = Subject::find($id);
         $input = $request->all();
         $subjectGrades = $input['grades'];
         $subjectTeachers = $request->teachers;
@@ -132,37 +107,20 @@ class SubjectsController extends Controller
             'name_ar'         => ' Name in Arabic',
         ]);
 
-
         //Save Subject to subjects table
-        $subject = new Subject();
         $subject->created_by = $input['created_by'];
-        $subject->save();
+        $subject->update(['created_by' => $input['created_by']]);
 
+        $subject->subject_en()->update(['subject_id' => $id, 'name' =>  $request->name_en ]);
+        $subject->subject_ar()->update(['subject_id' => $id, 'name' =>  $request->name_ar ]);
 
-        //Save Subject and related grade to subject_grades table
-        $subject->subject_en()->create(['subject_id' => $subject->id, 'name' =>  $request->name_en ]);
-        $subject->subject_ar()->create(['subject_id' => $subject->id, 'name' =>  $request->name_ar ]);
+        //Update Subjects Grades Table;
+        $subject->grades()->sync($subjectGrades);
 
-        //Save Subject ID and related grade ID to subject_grades table
-        foreach ($subjectGrades as $grade)
-        {
-            if ($grade != null)
-            {
-                DB::table('subjects_grades')->insert(['grade_id' => $grade, 'subject_id' => $subject->id, 'created_at' => null, 'updated_at' => null]);
-            }
-        }
+        //Update Subjects Teachers Table;
+        $subject->teachers()->sync($subjectTeachers);
 
-        //Save Subject ID and related Teacher ID to subject_teachers table
-        foreach ($subjectTeachers as $teacher)
-        {
-            if ($teacher != null)
-            {
-                DB::table('subjects_teachers')->insert(['teacher_id' => $teacher, 'subject_id' => $subject->id, 'created_at' => null, 'updated_at' => null]);
-            }
-        }
-
-        Session::flash('create', 'Subject  Has Been Created Successfully');
-
+        Session::flash('create', 'Subject  Has Been Updated Successfully');
         return redirect('admin/subjects');
     }
 
@@ -174,6 +132,20 @@ class SubjectsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $subject = Subject::find($id);
+
+        try
+        {
+            $subject->delete();
+        }
+
+        catch (\Exception $e)
+        {
+            Session::flash('exception', 'Error, Can\'t Delete Subject Because There are related Tables');
+            return redirect()->back();
+        }
+
+        Session::flash('delete', 'Subject Has Been Deleted Successfully');
+        return redirect('admin/subjects');
     }
 }

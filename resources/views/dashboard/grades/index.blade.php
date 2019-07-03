@@ -26,7 +26,9 @@
     <section class="content-header">
         <h1>
             Grades
-            <small>All Grades</small>
+
+
+            <small>@if(!empty($subject)){{$subject->{'subject_'.currentLang()}->name . ' Subject'}} @else All @endif Grades</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{url('/')}}"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -40,9 +42,9 @@
         <div class="row">
             <!-- left column -->
             <div class="col-md-12">
-                <div class="box box-primary">
+                <div class="box box-primary" style="padding: 15px">
                     <div class="box-header with-border">
-                        <h3 class="box-title">All Grades Info</h3>
+                        <h3 class="box-title">@if(!empty($subject)){{$subject->{'subject_'.currentLang()}->name . ' Subject'}} @else All @endif Grades Info</h3>
                         <a href="{{url('admin/grades/create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add New Grade </a>
                     </div>
                     <!-- /.box-header -->
