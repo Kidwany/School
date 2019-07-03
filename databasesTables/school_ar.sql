@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 01, 2019 at 12:11 AM
--- Server version: 10.1.36-MariaDB
--- PHP Version: 7.2.11
+-- Generation Time: Jul 03, 2019 at 07:52 PM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 7.3.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -43,7 +43,7 @@ CREATE TABLE `grades` (
 INSERT INTO `grades` (`id`, `grade_name`, `grade_id`, `created_at`, `updated_at`) VALUES
 (1, 'الصف الأول الإبتدائي', 1, '2019-06-18 22:00:00', '2019-06-18 22:00:00'),
 (8, 'الصف الثاني الإبتدائي', 10, '2019-06-29 20:44:49', '2019-06-29 20:44:49'),
-(9, 'الصف الثالث الإبتدائي', 11, '2019-06-29 22:06:55', '2019-06-29 22:06:55'),
+(9, 'الصف الثالث الإبتدائي', 11, '2019-06-29 22:06:55', '2019-07-03 13:29:03'),
 (10, 'الصف الرابع الإبتدائي', 12, '2019-06-29 22:08:16', '2019-06-29 22:08:16'),
 (11, 'الصف الخامس الإبتدائي', 13, '2019-06-29 22:08:36', '2019-06-29 22:08:36'),
 (12, 'الصف السادس الإبتدائي', 14, '2019-06-29 22:09:18', '2019-06-29 22:09:18'),
@@ -92,11 +92,12 @@ CREATE TABLE `subjects` (
 
 INSERT INTO `subjects` (`id`, `subject_id`, `name`, `created_at`, `updated_at`) VALUES
 (1, 1, 'لغة عربيية', '2019-06-25 22:00:00', '2019-06-11 22:00:00'),
-(2, 6, 'لغة انجليزيية', '2019-06-30 17:42:58', '2019-06-30 17:42:58'),
-(3, 7, 'لغة فرنسية', '2019-06-30 17:44:47', '2019-06-30 17:44:47'),
+(2, 6, 'لغة انجليزيية', '2019-06-30 17:42:58', '2019-07-03 12:34:59'),
+(3, 7, 'لغة فرنسية', '2019-06-30 17:44:47', '2019-07-03 11:04:01'),
 (4, 8, 'رياضييات', '2019-06-30 17:59:00', '2019-06-30 17:59:00'),
 (5, 9, 'جغرافيا', '2019-06-30 18:01:04', '2019-06-30 18:01:04'),
-(10, 14, 'تاريخ', '2019-06-30 18:13:43', '2019-06-30 18:13:43');
+(10, 14, 'تاريخ', '2019-06-30 18:13:43', '2019-07-03 10:17:06'),
+(11, 15, 'تربية رياضية', '2019-07-03 07:57:12', '2019-07-03 09:43:37');
 
 --
 -- Indexes for dumped tables
@@ -143,7 +144,7 @@ ALTER TABLE `levels`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
@@ -165,7 +166,7 @@ ALTER TABLE `levels`
 -- Constraints for table `subjects`
 --
 ALTER TABLE `subjects`
-  ADD CONSTRAINT `subject_ar_id` FOREIGN KEY (`subject_id`) REFERENCES `school`.`subjects` (`id`);
+  ADD CONSTRAINT `subject_ar_id` FOREIGN KEY (`subject_id`) REFERENCES `school`.`subjects` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

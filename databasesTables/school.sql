@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 01, 2019 at 12:11 AM
--- Server version: 10.1.36-MariaDB
--- PHP Version: 7.2.11
+-- Generation Time: Jul 03, 2019 at 07:52 PM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 7.3.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -72,6 +72,29 @@ INSERT INTO `grades` (`id`, `level_id`, `created_by`, `created_at`, `updated_at`
 (13, 1, 2, '2019-06-29 22:08:36', '2019-06-29 22:08:36'),
 (14, 1, 2, '2019-06-29 22:09:18', '2019-06-29 22:09:18'),
 (15, 3, 2, '2019-06-29 22:09:40', '2019-06-29 22:09:40');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `grades_teachers`
+--
+
+CREATE TABLE `grades_teachers` (
+  `id` int(10) NOT NULL,
+  `grade_id` int(10) DEFAULT NULL,
+  `teacher_id` int(10) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf32;
+
+--
+-- Dumping data for table `grades_teachers`
+--
+
+INSERT INTO `grades_teachers` (`id`, `grade_id`, `teacher_id`, `created_at`, `updated_at`) VALUES
+(1, 10, 3, '2019-07-03 15:20:57', '2019-07-03 15:20:57'),
+(2, 13, 3, '2019-07-03 15:20:57', '2019-07-03 15:20:57'),
+(3, 12, 3, '2019-07-03 15:48:45', '2019-07-03 15:48:45');
 
 -- --------------------------------------------------------
 
@@ -204,7 +227,8 @@ INSERT INTO `subjects` (`id`, `created_by`, `created_at`, `updated_at`) VALUES
 (7, 2, '2019-06-30 17:44:47', '2019-06-30 17:44:47'),
 (8, 2, '2019-06-30 17:59:00', '2019-06-30 17:59:00'),
 (9, 2, '2019-06-30 18:01:04', '2019-06-30 18:01:04'),
-(14, 2, '2019-06-30 18:13:43', '2019-06-30 18:13:43');
+(14, 2, '2019-06-30 18:13:43', '2019-06-30 18:13:43'),
+(15, 2, '2019-07-03 07:57:11', '2019-07-03 07:57:11');
 
 -- --------------------------------------------------------
 
@@ -226,8 +250,13 @@ CREATE TABLE `subjects_grades` (
 --
 
 INSERT INTO `subjects_grades` (`id`, `subject_id`, `grade_id`, `created_by`, `created_at`, `updated_at`) VALUES
-(11, 14, 14, NULL, NULL, NULL),
-(12, 14, 15, NULL, NULL, NULL);
+(26, 7, 10, NULL, NULL, NULL),
+(30, 7, 1, NULL, '2019-07-03 10:41:24', '2019-07-03 10:41:24'),
+(31, 7, 12, NULL, '2019-07-03 10:47:06', '2019-07-03 10:47:06'),
+(32, 7, 13, NULL, '2019-07-03 11:02:01', '2019-07-03 11:02:01'),
+(34, 6, 1, NULL, '2019-07-03 12:35:00', '2019-07-03 12:35:00'),
+(35, 6, 10, NULL, '2019-07-03 12:35:00', '2019-07-03 12:35:00'),
+(36, 6, 11, NULL, '2019-07-03 12:35:00', '2019-07-03 12:35:00');
 
 -- --------------------------------------------------------
 
@@ -240,7 +269,7 @@ CREATE TABLE `subjects_teachers` (
   `subject_id` int(10) DEFAULT NULL,
   `teacher_id` int(10) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -248,7 +277,15 @@ CREATE TABLE `subjects_teachers` (
 --
 
 INSERT INTO `subjects_teachers` (`id`, `subject_id`, `teacher_id`, `created_at`, `updated_at`) VALUES
-(2, 14, 1, '0000-00-00 00:00:00', '2019-06-30 20:13:43');
+(3, 15, 1, '2019-07-03 09:57:12', '2019-07-03 09:57:12'),
+(4, 7, 1, '2019-07-03 13:01:46', NULL),
+(6, 6, 1, '2019-07-03 14:35:00', NULL),
+(7, 6, 2, '2019-07-03 17:07:33', NULL),
+(8, 7, 2, '2019-07-03 17:07:33', NULL),
+(9, 9, 2, '2019-07-03 17:07:33', NULL),
+(10, 6, 3, '2019-07-03 17:20:57', NULL),
+(11, 8, 3, '2019-07-03 17:20:57', NULL),
+(12, 7, 3, '2019-07-03 17:48:45', NULL);
 
 -- --------------------------------------------------------
 
@@ -272,7 +309,9 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`id`, `name`, `email`, `phone`, `address`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 'Mahmoud Osama Sayed', 'osama@gmail.com', '0255984566', 'Assuit', 2, '2019-06-18 22:00:00', '2019-06-10 22:00:00');
+(1, 'Mahmoud Osama Sayed', 'osama@gmail.com', '0255984566', 'Assuit', 2, '2019-06-18 22:00:00', '2019-06-10 22:00:00'),
+(2, 'Ahmed Abd El Moez', 'ahmed@gmail.com', '01100960900', 'Cairo', 2, '2019-07-03 15:07:33', '2019-07-03 15:07:33'),
+(3, 'Khaled Nabawy Raouf', 'khalednabawy7@gmail.com', '01025695841', 'Fayoum, Egypt', 2, '2019-07-03 15:20:57', '2019-07-03 15:49:30');
 
 -- --------------------------------------------------------
 
@@ -318,6 +357,14 @@ ALTER TABLE `grades`
   ADD PRIMARY KEY (`id`),
   ADD KEY `grade_created_by` (`created_by`),
   ADD KEY `grade_level_id` (`level_id`);
+
+--
+-- Indexes for table `grades_teachers`
+--
+ALTER TABLE `grades_teachers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `grade_teacher_id` (`teacher_id`),
+  ADD KEY `teacher_grade_id_fk` (`grade_id`);
 
 --
 -- Indexes for table `images`
@@ -404,19 +451,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `classes`
 --
 ALTER TABLE `classes`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `grades_teachers`
+--
+ALTER TABLE `grades_teachers`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `levels`
@@ -434,37 +487,37 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `setting`
 --
 ALTER TABLE `setting`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `subjects_grades`
 --
 ALTER TABLE `subjects_grades`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `subjects_teachers`
 --
 ALTER TABLE `subjects_teachers`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -489,6 +542,13 @@ ALTER TABLE `classes`
 ALTER TABLE `grades`
   ADD CONSTRAINT `grade_created_by` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `grade_level_id` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`);
+
+--
+-- Constraints for table `grades_teachers`
+--
+ALTER TABLE `grades_teachers`
+  ADD CONSTRAINT `grade_teacher_id` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `teacher_grade_id_fk` FOREIGN KEY (`grade_id`) REFERENCES `grades` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `levels`
@@ -523,15 +583,15 @@ ALTER TABLE `subjects`
 -- Constraints for table `subjects_grades`
 --
 ALTER TABLE `subjects_grades`
-  ADD CONSTRAINT `grade_id_grades` FOREIGN KEY (`grade_id`) REFERENCES `grades` (`id`),
-  ADD CONSTRAINT `subject_id_subjects` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`);
+  ADD CONSTRAINT `grade_id_grades` FOREIGN KEY (`grade_id`) REFERENCES `grades` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `subject_id_subjects` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `subjects_teachers`
 --
 ALTER TABLE `subjects_teachers`
-  ADD CONSTRAINT `subject_subject_id` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`),
-  ADD CONSTRAINT `teacher_teache_id` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`id`);
+  ADD CONSTRAINT `subject_subject_id` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `teacher_teache_id` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `teachers`
