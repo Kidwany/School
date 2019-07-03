@@ -14,7 +14,7 @@
                 'searching'   : true,
                 'ordering'    : true,
                 'info'        : true,
-                'autoWidth'   : true
+                'autoWidth'   : false
             })
         })
     </script>
@@ -54,8 +54,6 @@
                         <tr>
                             <th>id</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
                             <th>Grades</th>
                             <th>Subjects</th>
                             <th>Students</th>
@@ -70,8 +68,6 @@
                         <tr>
                             <th>id</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
                             <th>Grades</th>
                             <th>Subjects</th>
                             <th>Students</th>
@@ -88,8 +84,6 @@
                                 <tr>
                                     <td>{{$teacher->id}}</td>
                                     <td>{{$teacher->name}}</td>
-                                    <td>{{$teacher->email}}</td>
-                                    <td>{{$teacher->phone}}</td>
                                     <td>
                                         <a href="{{url('admin/grades?teacherID='.$teacher->id)}}">Show Grades</a>
                                     </td>

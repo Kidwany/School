@@ -63,12 +63,14 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div id="app">
     <main>
-        @include('dashboard.layouts.header')
-        @include('dashboard.layouts.sideMenu')
-        <div class="content-wrapper">
-            @yield('content')
+        <div class="wrapper">
+            @include('dashboard.layouts.header')
+            @include('dashboard.layouts.sideMenu')
+            <div class="content-wrapper">
+                @yield('content')
+            </div>
+            @include('dashboard.layouts.footer')
         </div>
-        @include('dashboard.layouts.footer')
     </main>
 </div>
 
