@@ -63,4 +63,9 @@ class Student extends Model
     {
         return $this->belongsTo('App\User', 'created_by','id');
     }
+
+    public function teachers()
+    {
+        return $this->belongsToMany(Teacher::class, 'teachers_students')->withTimestamps();
+    }
 }

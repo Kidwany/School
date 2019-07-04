@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 03, 2019 at 07:53 PM
+-- Generation Time: Jul 04, 2019 at 05:50 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.3
 
@@ -47,7 +47,12 @@ INSERT INTO `grades` (`id`, `grade_name`, `grade_id`, `created_at`, `updated_at`
 (10, 'Grade 4', 12, '2019-06-29 22:08:16', '2019-06-29 22:08:16'),
 (11, 'Grade 5', 13, '2019-06-29 22:08:36', '2019-06-29 22:08:36'),
 (12, 'Grade 6', 14, '2019-06-29 22:09:18', '2019-06-29 22:09:18'),
-(13, 'Grade 7', 15, '2019-06-29 22:09:40', '2019-06-29 22:09:40');
+(13, 'Grade 7', 15, '2019-06-29 22:09:40', '2019-06-29 22:09:40'),
+(14, 'Grade 8', 16, '2019-07-04 07:30:45', '2019-07-04 07:30:45'),
+(15, 'Grade 9', 17, '2019-07-04 07:31:15', '2019-07-04 07:31:15'),
+(16, 'Grade 10', 18, '2019-07-04 07:31:40', '2019-07-04 07:31:40'),
+(17, 'Grade 11', 19, '2019-07-04 07:32:00', '2019-07-04 07:32:00'),
+(18, 'Grade 12', 20, '2019-07-04 07:32:19', '2019-07-04 07:32:19');
 
 -- --------------------------------------------------------
 
@@ -91,13 +96,14 @@ CREATE TABLE `subjects` (
 --
 
 INSERT INTO `subjects` (`id`, `subject_id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Arabic', '2019-06-11 22:00:00', '2019-06-25 22:00:00'),
+(1, 1, 'Arabic', '2019-06-11 22:00:00', '2019-07-04 10:26:00'),
 (10, 6, 'English', '2019-06-30 17:42:58', '2019-07-03 12:34:59'),
 (11, 7, 'French', '2019-06-30 17:44:47', '2019-07-03 11:04:00'),
 (12, 8, 'Math', '2019-06-30 17:59:00', '2019-06-30 17:59:00'),
 (13, 9, 'Geography', '2019-06-30 18:01:04', '2019-06-30 18:01:04'),
 (18, 14, 'History', '2019-06-30 18:13:43', '2019-07-03 10:17:06'),
-(19, 15, 'Sports Education', '2019-07-03 07:57:12', '2019-07-03 09:43:37');
+(19, 15, 'Sports Education', '2019-07-03 07:57:12', '2019-07-03 09:43:37'),
+(22, 18, 'Philosophy', '2019-07-04 07:37:25', '2019-07-04 07:37:25');
 
 --
 -- Indexes for dumped tables
@@ -132,7 +138,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `levels`
@@ -144,7 +150,7 @@ ALTER TABLE `levels`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Constraints for dumped tables

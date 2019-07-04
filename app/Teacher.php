@@ -41,18 +41,27 @@ class Teacher extends Model
      */
     protected $dates = [];
 
+
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by','id');
     }
+
 
     public function subjects()
     {
         return $this->belongsToMany(Subject::class, 'subjects_teachers','teacher_id', 'subject_id');
     }
 
+
     public function grades()
     {
         return $this->belongsToMany(Grade::class, 'grades_teachers')->withTimestamps();
+    }
+
+
+    public function classes()
+    {
+        return $this->belongsToMany(Classes::class, 'classes_teachers', 'teacher_id', 'class_id')->with('student');
     }
 }

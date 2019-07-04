@@ -28,12 +28,28 @@
             Grades
 
 
-            <small>@if(!empty($subject)){{$subject->{'subject_'.currentLang()}->name . ' Subject'}} @else All @endif Grades</small>
+            <small>
+                @if(!empty($subject))
+                    {{$subject->{'subject_'.currentLang()}->name . ' Subject'}}
+                @elseif(!empty($teacher))
+                    Grades Taught By Mr. <a href="{{url('admin/teachers/'.$teacher->id.'/show')}}">{{$teacher->name}}</a>
+                @else
+                    All Grades
+                @endif
+            </small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{url('/')}}"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="{{url('/admin/grades')}}">Grades</a></li>
-            <li class="active">All Grades</li>
+            <li class="active">
+                @if(!empty($subject))
+                    {{$subject->{'subject_'.currentLang()}->name . ' Subject'}}
+                @elseif(!empty($teacher))
+                    Grades Taught By Mr. <a href="{{url('admin/teachers/'.$teacher->id.'/show')}}">{{$teacher->name}}</a>
+                @else
+                    All Grades
+                @endif
+            </li>
         </ol>
     </section>
 
@@ -44,7 +60,14 @@
             <div class="col-md-12">
                 <div class="box box-primary" style="padding: 15px">
                     <div class="box-header with-border">
-                        <h3 class="box-title">@if(!empty($subject)){{$subject->{'subject_'.currentLang()}->name . ' Subject'}} @else All @endif Grades Info</h3>
+                        <h3 class="box-title">
+                            @if(!empty($subject))
+                                {{$subject->{'subject_'.currentLang()}->name . ' Subject'}}
+                            @elseif(!empty($teacher))
+                                Grades Taught By Mr. <a href="{{url('admin/teachers/'.$teacher->id.'/show')}}">{{$teacher->name}} </a>Info
+                            @else
+                                All Grades
+                            @endif</h3>
                         <a href="{{url('admin/grades/create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add New Grade </a>
                     </div>
                     <!-- /.box-header -->

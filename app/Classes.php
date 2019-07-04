@@ -53,4 +53,16 @@ class Classes extends Model
     }
 
 
+    public function student()
+    {
+        return $this->hasMany(Student::class, 'class_id', 'id');
+    }
+
+
+    public function teachers()
+    {
+        return $this->belongsToMany(Teacher::class, 'classes_teachers', 'class_id', 'teacher_id');
+    }
+
+
 }

@@ -4,16 +4,18 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Classes;
 use App\Grade;
+use App\Http\Controllers\Controller;
 use App\Level;
 use App\Student;
+use App\Teacher;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
 class StudentsController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -21,9 +23,18 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        $students = Student::with('classes', 'createdBy')->get();
+        $teacher_id = Input::get('teacherID');
+        if ($teacher_id) {
+            $teacher = Teacher::find($teacher_id);
+            $students = $teacher->classes()->where('teacher_id', $teacher_id)->get();
+            return view('dashboard.students.teacherStudents', compact('students', 'teacher'));
+        }
+
+        $students = Student::with('classes', 'createdBy', 'grade', 'level')->get();
         return view('dashboard.students.index', compact('students'));
+
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -56,46 +67,45 @@ class StudentsController extends Controller
     {
         $input = $request->all();
         $input['created_by'] = Auth::id();
-        $this->validate($request,[
-            'name'             => 'required|max:200',
-            'email'            => 'required|unique:students|email|max:200',
-            'phone'            => 'required|max:15',
-            'address'          => 'required|max:200',
-            'class_id'         => 'required|int:10',
-            'grade_id'         => 'required|int:10',
-            'level_id'         => 'required|int:10',
+        $this->validate($request, [
+            'name' => 'required|max:200',
+            'email' => 'required|unique:students|email|max:200',
+            'phone' => 'required|max:15',
+            'address' => 'required|max:200',
+            'class_id' => 'required|int:10',
+            'grade_id' => 'required|int:10',
+            'level_id' => 'required|int:10',
         ], [], [
-            'name'             => 'Name',
-            'email'            => 'Email',
-            'phone'            => 'Phone',
-            'address'          => 'Address',
-            'class_id'         => 'Class',
-            'grade_id'         => 'Grade',
-            'level_id'         => 'Level',
+            'name' => 'Name',
+            'email' => 'Email',
+            'phone' => 'Phone',
+            'address' => 'Address',
+            'class_id' => 'Class',
+            'grade_id' => 'Grade',
+            'level_id' => 'Level',
         ]);
 
         // Add Grade to main table of grades
         $student = new Student();
-        $student->name          = $request->name;
-        $student->email         = $request->email;
-        $student->phone         = $request->phone;
-        $student->address       = $request->address;
-        $student->class_id      = $request->class_id;
-        $student->grade_id      = $request->grade_id;
-        $student->level_id      = $request->level_id;
-        $student->created_by    = $input['created_by'];
+        $student->name = $request->name;
+        $student->email = $request->email;
+        $student->phone = $request->phone;
+        $student->address = $request->address;
+        $student->class_id = $request->class_id;
+        $student->grade_id = $request->grade_id;
+        $student->level_id = $request->level_id;
+        $student->created_by = $input['created_by'];
         $student->save();
 
 
         Session::flash('create', 'Student ' . $student->name . ' Has Been Created Successfully');
-
         return redirect('admin/students');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -106,7 +116,7 @@ class StudentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -119,43 +129,38 @@ class StudentsController extends Controller
     }
 
 
-
-
-
-
-
     public function update(Request $request, $id)
     {
         $student = Student::find($id);
         $input = $request->all();
         $input['created_by'] = Auth::id();
-        $this->validate($request,[
-            'name'             => 'required|max:200',
-            'email'            => 'required|unique:students,id,'. $id .'|email|max:200',
-            'phone'            => 'required|max:15',
-            'address'          => 'required|max:200',
-            'class_id'         => 'required|int:10',
-            'grade_id'         => 'required|int:10',
-            'level_id'         => 'required|int:10',
+        $this->validate($request, [
+            'name' => 'required|max:200',
+            'email' => 'required|unique:students,id,' . $id . '|email|max:200',
+            'phone' => 'required|max:15',
+            'address' => 'required|max:200',
+            'class_id' => 'required|int:10',
+            'grade_id' => 'required|int:10',
+            'level_id' => 'required|int:10',
         ], [], [
-            'name'             => 'Name',
-            'email'            => 'Email',
-            'phone'            => 'Phone',
-            'address'          => 'Address',
-            'class_id'         => 'Class',
-            'grade_id'         => 'Grade',
-            'level_id'         => 'Level',
+            'name' => 'Name',
+            'email' => 'Email',
+            'phone' => 'Phone',
+            'address' => 'Address',
+            'class_id' => 'Class',
+            'grade_id' => 'Grade',
+            'level_id' => 'Level',
         ]);
 
         // Add Grade to main table of grades
-        $student->name          = $request->name;
-        $student->email         = $request->email;
-        $student->phone         = $request->phone;
-        $student->address       = $request->address;
-        $student->class_id      = $request->class_id;
-        $student->grade_id      = $request->grade_id;
-        $student->level_id      = $request->level_id;
-        $student->created_by    = $input['created_by'];
+        $student->name = $request->name;
+        $student->email = $request->email;
+        $student->phone = $request->phone;
+        $student->address = $request->address;
+        $student->class_id = $request->class_id;
+        $student->grade_id = $request->grade_id;
+        $student->level_id = $request->level_id;
+        $student->created_by = $input['created_by'];
         $student->save();
 
 
@@ -164,10 +169,11 @@ class StudentsController extends Controller
         return redirect('admin/students');
     }
 
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -175,13 +181,9 @@ class StudentsController extends Controller
         $student = Student::find($id);
 
         // Delete Image From Related Path
-        try
-        {
+        try {
             $student->delete();
-        }
-
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             Session::flash('exception', 'Error, Can\'t Delete Student Because There are related Tables');
             return redirect()->back();
         }

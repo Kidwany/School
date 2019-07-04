@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
 class SubjectsController extends Controller
@@ -20,8 +21,18 @@ class SubjectsController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::with('subject_en', 'subject_ar','createdBy', 'grades')->get();
-        return view('dashboard.subjects.index', compact('subjects'));
+        $teacher_id = Input::get('teacherID');
+        if ($teacher_id)
+        {
+            $teacher = Teacher::find($teacher_id);
+            $subjects = $teacher->subjects()->where('teacher_id', $teacher_id)->get();
+            return view('dashboard.subjects.index', compact('subjects', 'teacher'));
+        }
+        else
+        {
+            $subjects = Subject::with('subject_en', 'subject_ar','createdBy', 'grades')->get();
+            return view('dashboard.subjects.index', compact('subjects'));
+        }
     }
 
     /**

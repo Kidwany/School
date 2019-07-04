@@ -25,12 +25,12 @@
     <section class="content-header">
         <h1>
             Subjects
-            <small>All Subjects</small>
+            <small>@if(!empty($teacher)){{$teacher->name . ' Teacher'}} @else All @endif Subjects</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{url('/')}}"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="{{url('/admin/subjects')}}">Subjects</a></li>
-            <li class="active">All Subjects</li>
+            <li class="active">@if(!empty($teacher))<a href="{{url('admin/teachers/'.$teacher->id.'/show')}}">{{$teacher->name . ' Teacher'}}</a>  @else All @endif Subjects</li>
         </ol>
     </section>
 
@@ -42,7 +42,7 @@
             <div class="col-md-12">
                 <div class="box box-primary" style="padding: 15px">
                     <div class="box-header with-border">
-                        <h3 class="box-title">All Students Info</h3>
+                        <h3 class="box-title">@if(!empty($teacher))<a href="{{url('admin/teachers/'.$teacher->id.'/show')}}">{{$teacher->name}}</a> Teacher  @else All @endif Subjects</h3>
                         <a href="{{url('admin/subjects/create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add New Subject </a>
                     </div>
                     @include('dashboard.layouts.messages')
@@ -84,7 +84,7 @@
                                         <a href="{{url('admin/grades?subjectID='.$subject->id)}}">Show Grades</a>
                                     </td>
                                     <td>
-                                        <a href="{{url('admin/subject-teachers/'.$subject->id)}}">Show Teachers</a>
+                                        <a href="{{url('admin/teachers?subjectID='.$subject->id)}}">Show Teachers</a>
                                     </td>
                                     <td>
                                         <a href="{{url('admin/users/'.$subject->createdBy->id.'/edit')}}">{{$subject->createdBy->name}}</a>

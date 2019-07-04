@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Grade;
 use App\Level;
 use App\Subject;
+use App\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -22,16 +23,27 @@ class GradesController extends Controller
     public function index()
     {
         $subject_id = Input::get('subjectID');
+        $teacher_id = Input::get('teacherID');
 
+        //Get Grades Related to Subject
         if($subject_id)
         {
             $subject = Subject::find($subject_id);
             $grades = $subject->grades()->where('subject_id', $subject_id)->get();
             return view('dashboard.grades.index', compact('grades', 'subject'));
         }
+
+        //Get Grades Related to Subject
+        elseif($teacher_id)
+        {
+            $teacher = Teacher::find($teacher_id);
+            $grades = $teacher->grades()->where('teacher_id', $teacher_id)->get();
+            return view('dashboard.grades.index', compact('grades', 'teacher'));
+        }
+
         else
         {
-            $grades = Grade::with('grade_en', 'grade_ar','createdBy', 'level')->get();
+            $grades = Grade::with('grade_en', 'grade_ar','createdBy', 'level', 'classes')->get();
             return view('dashboard.grades.index', compact('grades'));
         }
 

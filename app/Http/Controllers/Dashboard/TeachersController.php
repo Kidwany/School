@@ -8,6 +8,7 @@ use App\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
 class TeachersController extends Controller
@@ -20,6 +21,13 @@ class TeachersController extends Controller
      */
     public function index()
     {
+        $subject_id = Input::get('subjectID');
+        if ($subject_id)
+        {
+            $subject = Subject::find($subject_id);
+            $teachers = $subject->teachers()->where('subject_id', $subject_id)->get();
+            return view('dashboard.teachers.index', compact('teachers', 'subject'));
+        }
         $teachers = Teacher::with('createdBy', 'subjects')->get();
         return view('dashboard.teachers.index', compact('teachers'));
     }

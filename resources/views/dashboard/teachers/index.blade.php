@@ -30,7 +30,15 @@
         <ol class="breadcrumb">
             <li><a href="{{url('/')}}"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="{{url('/admin/teachers')}}">Teachers</a></li>
-            <li class="active">All Teachers</li>
+            <li class="active">
+                @if(!empty($subject))
+                    <a href="{{url('admin/subjects/'.$subject->id.'/edit')}}">Teachers of {{$subject->{'subject_'.currentLang()}->name}}  Subject</a>
+                {{--@elseif(!empty($teacher))
+                    Grades Taught By Mr. <a href="{{url('admin/teachers/'.$teacher->id.'/show')}}">{{$teacher->name}}</a>--}}
+                @else
+                    All Teachers
+                @endif
+            </li>
         </ol>
     </section>
 
@@ -42,7 +50,13 @@
             <div class="col-md-12">
                 <div class="box box-primary" style="padding: 20px">
                     <div class="box-header with-border">
-                        <h3 class="box-title">All Teachers Info</h3>
+                        <h3 class="box-title">@if(!empty($subject))
+                                <a href="{{url('admin/subjects/'.$subject->id.'/edit')}}">Teachers of {{$subject->{'subject_'.currentLang()}->name}} </a> Subject Info
+                                {{--@elseif(!empty($teacher))
+                                    Grades Taught By Mr. <a href="{{url('admin/teachers/'.$teacher->id.'/show')}}">{{$teacher->name}}</a>--}}
+                            @else
+                                All Teachers Info
+                            @endif</h3>
                         <a href="{{url('admin/teachers/create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add New Teacher </a>
                     </div>
                     @include('dashboard.layouts.messages')
