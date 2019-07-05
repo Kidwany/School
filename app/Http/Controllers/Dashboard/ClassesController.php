@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Classes;
 use App\Grade;
+use App\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
 class ClassesController extends Controller
@@ -18,6 +20,14 @@ class ClassesController extends Controller
      */
     public function index()
     {
+        $teacher_id = Input::get('teacherID');
+        if ($teacher_id)
+        {
+            $teacher = Teacher::find($teacher_id);
+            $classes = $teacher->classes()->where('teacher_id', $teacher_id)->get();
+            return view('dashboard.classes.index', compact('classes', 'teacher'));
+        }
+
         $classes = Classes::with('grade', 'createdBy')->get();
         return view('dashboard.classes.index', compact('classes'));
     }

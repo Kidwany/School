@@ -75,8 +75,8 @@
 
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Grades Learn Subject</label>
-                                        <select name="teachers[]" class="form-control select2" multiple="multiple" data-placeholder="Select a Grades"
+                                        <label>Teachers Teach Subject</label>
+                                        <select name="teachers[]" class="form-control select2" multiple="multiple" data-placeholder="Select Teachers"
                                                 style="width: 100%;">
                                             @if($teachers)
                                                 @foreach($teachers as $teacher)

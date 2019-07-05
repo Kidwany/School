@@ -4,21 +4,22 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Classes extends Model
+class Image extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'classes';
+    protected $connection = 'mysql';
+    protected $table = 'images';
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'grade_id', 'created_by'];
+    protected $fillable = ['name','path', 'album_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -40,29 +41,5 @@ class Classes extends Model
      * @var array
      */
     protected $dates = [];
-
-
-    public function createdBy()
-    {
-        return $this->belongsTo('App\User', 'created_by','id');
-    }
-
-    public function grade()
-    {
-        return $this->belongsTo('App\Grade', 'grade_id','id')->with('grade_'.currentLang());
-    }
-
-
-    public function student()
-    {
-        return $this->hasMany(Student::class, 'class_id', 'id');
-    }
-
-
-    public function teachers()
-    {
-        return $this->belongsToMany(Teacher::class, 'classes_teachers', 'class_id', 'teacher_id');
-    }
-
 
 }

@@ -54,7 +54,7 @@ class Grade extends Model
 
     public function level()
     {
-        return $this->belongsTo(Level::class, 'level_id', 'id');
+        return $this->belongsTo(Level::class, 'level_id', 'id')->with('level_'.currentLang());
     }
 
     public function createdBy()
@@ -64,7 +64,7 @@ class Grade extends Model
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'subjects_grades','grade_id', 'subject_id');
+        return $this->belongsToMany(Subject::class, 'subjects_grades','grade_id', 'subject_id')->with('subject_'.currentLang());
     }
 
     public function teachers()

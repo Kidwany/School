@@ -49,13 +49,13 @@ class Student extends Model
 
     public function grade()
     {
-        return $this->belongsTo(Grade::class, 'grade_id','id');
+        return $this->belongsTo(Grade::class, 'grade_id','id')->with('grade_'.currentLang());
     }
 
 
     public function level()
     {
-        return $this->belongsTo(Level::class, 'level_id','id');
+        return $this->belongsTo(Level::class, 'level_id','id')->with('level_'.currentLang());
     }
 
 
@@ -64,8 +64,8 @@ class Student extends Model
         return $this->belongsTo('App\User', 'created_by','id');
     }
 
-    public function teachers()
+  /*  public function teachers()
     {
         return $this->belongsToMany(Teacher::class, 'teachers_students')->withTimestamps();
-    }
+    }*/
 }

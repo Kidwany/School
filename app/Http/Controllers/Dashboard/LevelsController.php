@@ -17,7 +17,7 @@ class LevelsController extends Controller
      */
     public function index()
     {
-        $levels = Level::with('level_ar', 'level_en', 'createdBy')->get();
+        $levels = Level::with('level_'.currentLang(), 'createdBy')->get();
         return view('dashboard.levels.index', compact('levels'));
     }
 

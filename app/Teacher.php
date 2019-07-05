@@ -18,7 +18,7 @@ class Teacher extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'phone', 'address', 'created_by'];
+    protected $fillable = ['name', 'email', 'phone', 'address', 'image_id', 'created_by'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -56,12 +56,17 @@ class Teacher extends Model
 
     public function grades()
     {
-        return $this->belongsToMany(Grade::class, 'grades_teachers')->withTimestamps();
+        return $this->belongsToMany(Grade::class, 'grades_teachers')->withTimestamps()->with('grade_'.currentLang());
     }
 
 
     public function classes()
     {
         return $this->belongsToMany(Classes::class, 'classes_teachers', 'teacher_id', 'class_id')->with('student');
+    }
+
+    public function image()
+    {
+        return $this->belongsTo(Image::class, 'image_id', 'id');
     }
 }

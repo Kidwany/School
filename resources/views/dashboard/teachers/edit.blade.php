@@ -106,6 +106,11 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-6">
+                                    <label for="password">Profile Picture</label>
+                                    <input type="file" name="image_id" class="form-control" id="password" placeholder="Repeat Password">
+                                </div>
+
 
                             </div>
                         </div>

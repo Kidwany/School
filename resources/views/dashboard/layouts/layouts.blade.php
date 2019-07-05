@@ -129,9 +129,5 @@
 
 @yield('customizedScript')
 
-
-
-
-
 </body>
 </html>

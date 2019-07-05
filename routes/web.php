@@ -51,3 +51,5 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Dashboard'], function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/admin/login', 'Auth\LoginController@loginView');

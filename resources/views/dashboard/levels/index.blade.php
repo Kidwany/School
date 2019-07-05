@@ -40,7 +40,7 @@
         <div class="row">
             <!-- left column -->
             <div class="col-md-12">
-                <div class="box box-primary">
+                <div class="box box-primary" style="padding: 20px;">
                     <div class="box-header with-border">
                         <h3 class="box-title">All Levels Info</h3>
                         <a href="{{url('admin/levels/create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add New Level </a>

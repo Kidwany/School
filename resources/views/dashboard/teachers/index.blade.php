@@ -116,7 +116,7 @@
                                     <td>{{$teacher->created_at->diffForHumans()}}</td>
                                     <td>{{$teacher->updated_at->diffForHumans()}}</td>
                                     <td>
-                                        <a href="{{url('admin/teachers/' . $teacher->id . '/show')}}" class="btn btn-block"><i class="fa fa-eye"></i> </a>
+                                        <a href="{{url('admin/teachers/' . $teacher->id)}}" class="btn btn-warning"><i class="fa fa-eye"></i> </a>
                                         <a href="{{url('admin/teachers/' . $teacher->id . '/edit')}}" class="btn btn-primary"><i class="fa fa-edit"></i> </a>
                                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#{{$teacher->id}}">
                                             <i class="fa fa-trash"></i>

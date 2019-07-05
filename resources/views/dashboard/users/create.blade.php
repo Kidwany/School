@@ -43,23 +43,30 @@
                         <input type="hidden" name="created_by">
                         <div class="box-body">
                             <div class="form-group">
+
                                 <div class="col-lg-6">
                                     <label for="exampleInputEmail1"> Name</label>
-                                    <input type="text" class="form-control" name="name" id="exampleInputEmail1" placeholder="Enter User Name">
+                                    <input type="text" class="form-control" name="name" id="exampleInputEmail1" placeholder="Enter User Name" value="{{old('name')}}">
                                 </div>
 
                                 <div class="col-lg-6">
                                     <label for="exampleInputEmail1"> Email</label>
-                                    <input type="email" class="form-control" name="email" id="exampleInputEmail1" placeholder="Enter User Email">
+                                    <input type="email" class="form-control" name="email" id="exampleInputEmail1" placeholder="Enter User Email" value="{{old('email')}}">
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="password">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                                    <input type="password" name="password" class="form-control" id="password" placeholder="Password" >
                                 </div>
+
                                 <div class="col-md-6">
                                     <label for="password">Confirm Password</label>
                                     <input type="password" name="password_confirmation" class="form-control" id="password" placeholder="Repeat Password">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="password">Profile Picture</label>
+                                    <input type="file" name="image_id" class="form-control" id="password" placeholder="Repeat Password">
                                 </div>
 
                             </div>

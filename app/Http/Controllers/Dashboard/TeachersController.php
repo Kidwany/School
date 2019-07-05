@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Grade;
+use App\Image;
 use App\Subject;
 use App\Teacher;
 use Illuminate\Http\Request;
@@ -65,12 +66,27 @@ class TeachersController extends Controller
             'address'     =>    'required|max:200',
             'subjects.*'  =>    'required',
             'grades.*'    =>    'required',
+            'image_id'    =>    'image'
         ],[],[
             'name'        =>    ' Name',
             'email'       =>    ' Email',
             'phone'       =>    ' Phone',
             'address'     =>    ' Address',
+            'image_id'    =>    ' Image'
         ]);
+
+        if ($file = $request->file('image_id'))
+        {
+            $name =  time() . $file->getClientOriginalName();
+
+            $file->move('images/dashboard/teachers', $name);
+
+            $path = 'images/dashboard/teachers/' . $name;
+
+            $image = Image::create(['name' => $name, 'path' => $path]);
+
+            $input['image_id'] = $image->id;
+        }
 
         //Save Teacher to subjects table
         $teacher = new Teacher();
@@ -79,12 +95,19 @@ class TeachersController extends Controller
         $teacher->email = $input['email'];
         $teacher->phone = $input['phone'];
         $teacher->address = $input['address'];
+        $teacher->image_id = $input['image_id'];
         $teacher->save();
+
+        //Return Created Teacher ID
+        $teacher_id = $teacher->id;
 
         //Save Subject ID and related Teacher ID to subject_teachers table
         $teacher->subjects()->attach($teacherSubjects);
-        //Save Subject ID and related Grade ID to subject_teachers table
+        //Save Grade ID and related Teacher ID to subject_teachers table
         $teacher->grades()->attach($teachersGrades);
+        //Save Class ID and related Grade ID to subject_teachers table
+        $teacher->classes()->attach($teacher_id);
+
 
         Session::flash('create', 'Teacher  Has Been Created Successfully');
         return redirect('admin/teachers');
@@ -98,7 +121,11 @@ class TeachersController extends Controller
      */
     public function show($id)
     {
-        //
+        $teacher    = Teacher::find($id);
+        $students   = $teacher->classes()->where('teacher_id', $id)->get();
+        $classes    = $teacher->classes()->where('teacher_id', $id)->with('grade','createdBy')->get();
+        $grades     = $teacher->grades()->where('teacher_id', $id)->with('level', 'createdBy', 'grade_en', 'subjects' )->get();
+        return view('dashboard.teachers.show', compact('teacher', 'students', 'grades', 'classes'));
     }
 
     /**
@@ -135,12 +162,27 @@ class TeachersController extends Controller
             'address'     =>    'required|max:200',
             'subjects.*'  =>    'required',
             'grades.*'    =>    'required',
+            'image_id'    =>    'image'
         ],[],[
             'name'        =>    ' Name',
             'email'       =>    ' Email',
             'phone'       =>    ' Phone',
             'address'     =>    ' Address',
+            'image_id'    =>    'Image'
         ]);
+
+        if ($file = $request->file('image_id'))
+        {
+            $name =  time() . $file->getClientOriginalName();
+
+            $file->move('images/dashboard/teachers', $name);
+
+            $path = 'images/dashboard/teachers/' . $name;
+
+            $image = Image::create(['name' => $name, 'path' => $path]);
+
+            $input['image_id'] = $image->id;
+        }
 
         //Save Teacher to teachers table
         $teacher->created_by = $input['created_by'];
@@ -155,6 +197,8 @@ class TeachersController extends Controller
         $teacher->subjects()->sync($teacherSubjects);
         //Save Subject ID and related Grade ID to subject_teachers table
         $teacher->grades()->sync($teachersGrades);
+        //Save Class ID and related Grade ID to subject_teachers table
+        $teacher->classes()->attach($id);
 
 
         Session::flash('update', 'Teacher  Has Been Updated Successfully');
@@ -169,6 +213,17 @@ class TeachersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $teacher = Teacher::find($id);
+
+        // Delete Image From Related Path
+        try {
+            $teacher->delete();
+        } catch (\Exception $e) {
+            Session::flash('exception', 'Error, Can\'t Delete Student Because There are related Tables');
+            return redirect()->back();
+        }
+
+        Session::flash('delete', 'Teacher Has Been Deleted Successfully');
+        return redirect('admin/teachers');
     }
 }

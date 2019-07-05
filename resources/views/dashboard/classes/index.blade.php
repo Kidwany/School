@@ -25,12 +25,25 @@
     <section class="content-header">
         <h1>
             Classes
-            <small>AllClasses Class</small>
+            <small> @if(!empty($teacher))
+                        <a href="{{url('admin/teachers/'.$teacher->id.'/edit')}}">Classes Taught By Mr.   {{$teacher->name}} </a>
+                        {{--@elseif(!empty($teacher))
+                            Grades Taught By Mr. <a href="{{url('admin/teachers/'.$teacher->id.'/show')}}">{{$teacher->name}}</a>--}}
+                    @else
+                        All Classes
+                    @endif</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{url('/')}}"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="{{url('/admin/classes')}}">Classes</a></li>
-            <li class="active">All Classes</li>
+            <li class="active"> @if(!empty($teacher))
+                        <a href="{{url('admin/teachers/'.$teacher->id.'/edit')}}">Classes Taught By Mr.   {{$teacher->name}} </a>
+                        {{--@elseif(!empty($teacher))
+                            Grades Taught By Mr. <a href="{{url('admin/teachers/'.$teacher->id.'/show')}}">{{$teacher->name}}</a>--}}
+                    @else
+                        All Classes
+                    @endif
+            </li>
         </ol>
     </section>
 
@@ -42,7 +55,15 @@
             <div class="col-md-12">
                 <div class="box box-primary" style="padding: 20px">
                     <div class="box-header with-border d-flex flex-row justify-content-between">
-                        <h3 class="box-title">All Classes Info</h3>
+                        <h3 class="box-title">
+                            @if(!empty($teacher))
+                                Classes Taught By Mr. <a href="{{url('admin/teachers/'.$teacher->id.'/edit')}}">   {{$teacher->name}} </a>
+                                    {{--@elseif(!empty($teacher))
+                                        Grades Taught By Mr. <a href="{{url('admin/teachers/'.$teacher->id.'/show')}}">{{$teacher->name}}</a>--}}
+                            @else
+                                All Classes
+                            @endif Info
+                        </h3>
                         <a href="{{url('admin/classes/create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add New Class </a>
                     </div>
                     @include('dashboard.layouts.messages')
