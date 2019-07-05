@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 04, 2019 at 05:50 PM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.3.3
+-- Generation Time: Jul 06, 2019 at 12:01 AM
+-- Server version: 10.1.36-MariaDB
+-- PHP Version: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -97,7 +97,7 @@ CREATE TABLE `subjects` (
 
 INSERT INTO `subjects` (`id`, `subject_id`, `name`, `created_at`, `updated_at`) VALUES
 (1, 1, 'لغة عربيية', '2019-06-25 22:00:00', '2019-07-04 10:26:00'),
-(2, 6, 'لغة انجليزيية', '2019-06-30 17:42:58', '2019-07-03 12:34:59'),
+(2, 6, 'لغة انجليزيية', '2019-06-30 17:42:58', '2019-07-05 09:54:56'),
 (3, 7, 'لغة فرنسية', '2019-06-30 17:44:47', '2019-07-03 11:04:01'),
 (4, 8, 'رياضييات', '2019-06-30 17:59:00', '2019-06-30 17:59:00'),
 (5, 9, 'جغرافيا', '2019-06-30 18:01:04', '2019-06-30 18:01:04'),
@@ -144,7 +144,7 @@ ALTER TABLE `grades`
 -- AUTO_INCREMENT for table `levels`
 --
 ALTER TABLE `levels`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `subjects`
