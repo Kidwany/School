@@ -77,7 +77,7 @@
                             @foreach($levels as $level)
                                 <tr>
                                     <td>{{$level->id}}</td>
-                                    <td>{{$level->{'level_'.currentLang()}->name }}</td>
+                                    <td>{{$level->level_en ? $level->level_en->name : ''}}</td>
                                     <td>
                                         <a href="{{url('admin/users/'.$level->createdBy->id.'/edit')}}">{{$level->createdBy->name}}</a>
                                     </td>
@@ -107,7 +107,7 @@
                                             <h4 class="modal-title">Delete Level</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Are You Sure You Want To Delete Level <strong>{{$level->{'level_'.currentLang()}->name }}</strong></p>
+                                            <p>Are You Sure You Want To Delete Level <strong>{{$level->level_en ? $level->level_en->name : ''}}</strong></p>
                                         </div>
                                         <div class="modal-footer">
                                             <form action="{{route('levels.destroy', $level->id)}}" method="post">

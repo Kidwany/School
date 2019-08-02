@@ -99,7 +99,8 @@
                                         <td>{{$class->id}}</td>
                                         <td>{{$class->name}}</td>
                                         <td>
-                                            <a href="{{url('admin/grades/'.$class->grade->id.'/edit')}}">{{$class->grade->{'grade_' . app()->getLocale()}->grade_name }}</a></td>
+                                            <a href="{{url('admin/grades/'.$class->grade->id.'/edit')}}">{{$class->grade_id ? $class->grade->grade_en ? $class->grade->grade_en->grade_name : '' : ''}}</a>
+                                        </td>
                                         <td>
                                             <a href="{{url('admin/users/'.$class->createdBy->id.'/edit')}}">{{$class->createdBy->name}}</a>
                                         </td>
@@ -114,10 +115,7 @@
                                     </tr>
                                 @endforeach
                             @endif
-
-
                         </tbody>
-
                     </table>
 
                     @if($classes)

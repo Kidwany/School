@@ -49,9 +49,11 @@
                                     <select class="form-control select2" name="grade_id" style="width: 100%;">
                                         @if($grades)
                                             @foreach($grades as $grade)
-                                                <option value="{{$grade->id}}" {{$grade->id == $class->grade_id ? 'selected' : ''}}>
-                                                    {{$grade->{'grade_'.app()->getLocale()}->grade_name }}
-                                                </option>
+                                                @if($grade->grade_en)
+                                                    <option value="{{$grade->id}}" {{$grade->id == $class->grade_id ? 'selected' : ''}}>
+                                                        {{$grade->grade_en ? $grade->grade_en->grade_name : ''}}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         @endif
                                     </select>

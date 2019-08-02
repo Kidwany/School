@@ -16,3 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::get('/grades-resource/{id}', 'Dashboard\GradesController@all_grade_resource');
+Route::delete('/grades-resource/{id}', 'Dashboard\GradesController@delete_grade_resource');
+Route::post('/grades-resource', 'Dashboard\GradesController@store_grade_resource');

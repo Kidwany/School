@@ -49,7 +49,7 @@ class Classes extends Model
 
     public function grade()
     {
-        return $this->belongsTo('App\Grade', 'grade_id','id')->with('grade_'.currentLang());
+        return $this->belongsTo(Grade::class, 'grade_id','id');
     }
 
 

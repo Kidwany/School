@@ -103,9 +103,9 @@
                             @foreach($grades as $grade)
                                 <tr>
                                     <td>{{$grade->id}}</td>
-                                    <td>{{$grade->{'grade_'.currentLang()}->grade_name }}</td>
+                                    <td>{{$grade->grade_en ? $grade->grade_en->grade_name : ''}}</td>
                                     <td>
-                                        <a href="{{url('admin/levels/'.$grade->level->id.'/edit')}}">{{$grade->level->{'level_' . currentLang()}->name }}</a></td>
+                                        <a href="{{url('admin/levels/'.$grade->level->id.'/edit')}}">{{$grade->level->level_en ? $grade->level->level_en->name : ''}}</a></td>
                                     <td>
                                         <a href="{{url('admin/users/'.$grade->createdBy->id.'/edit')}}">{{$grade->createdBy->name}}</a>
                                     </td>
@@ -135,7 +135,7 @@
                                             <h4 class="modal-title">Delete Class</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Are You Sure You Want To Delete Grade <strong>{{$grade->{'grade_'.currentLang()}->grade_name }}</strong></p>
+                                            <p>Are You Sure You Want To Delete Grade <strong>{{$grade->grade_en ? $grade->grade_en->grade_name : ''}}</strong></p>
                                         </div>
                                         <div class="modal-footer">
                                             <form action="{{route('grades.destroy', $grade->id)}}" method="post">

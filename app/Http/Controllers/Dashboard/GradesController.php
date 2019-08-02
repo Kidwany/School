@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Grade;
+use App\Http\Resources\Grades;
 use App\Level;
+use App\Role;
 use App\Subject;
 use App\Teacher;
 use Illuminate\Http\Request;
@@ -171,5 +173,42 @@ class GradesController extends Controller
 
         Session::flash('delete', 'Grade Has Been Deleted Successfully');
         return redirect('admin/grades');
+    }
+
+
+    public function all_grade_resource($id)
+    {
+        //return Grades::collection(Grade::with('grade_en', 'level')->get());
+        $grade = Grade::findOrFail($id);
+        return new Grades($grade);
+    }
+
+    public function delete_grade_resource($id)
+    {
+        //return Grades::collection(Grade::with('grade_en', 'level')->get());
+        $role = Role::findOrFail($id);
+        if ($role->delete())
+        {
+            return new Grades($role);
+        }
+    }
+
+    public function store_grade_resource(Request $request)
+    {
+        $input['created_by'] = Auth::id();
+        // Add Grade to main table of grades
+        $grade = new Grade;
+        $grade->level_id = $request->input('level_id');
+        $grade->created_by =$request->input('created_by');
+        $grade->save();
+
+        /*$grade->grade_en()->create(['grade_id' => $grade->id, 'grade_name' => $request->grade_name_en]);
+        $grade->grade_ar()->create(['grade_id' => $grade->id, 'grade_name' => $request->grade_name_ar]);*/
+
+        //Session::flash('create', 'Grade ' . $grade->grade_en->grade_name . ' Has Been Created Successfully');
+
+        return response()->json($grade);
+
+
     }
 }

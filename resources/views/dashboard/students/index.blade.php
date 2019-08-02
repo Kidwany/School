@@ -98,12 +98,12 @@
                                     </td>
                                     <td>
                                         <a href="{{url('admin/grades/' . $student->grade->id  . '/edit')}}">
-                                            {{$student->grade->{'grade_'.currentLang()}->grade_name }}
+                                            {{$student->grade->grade_en ? $student->grade->grade_en->grade_name : ''}}
                                         </a>
                                     </td>
                                     <td>
                                         <a href="{{url('admin/levels/' . $student->level->id  . '/edit')}}">
-                                            {{$student->level->{'level_'.currentLang()}->name }}
+                                            {{$student->level->level_en ? $student->level->level_en->name : '' }}
                                         </a>
                                     </td>
                                     <td>
